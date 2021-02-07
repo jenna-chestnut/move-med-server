@@ -10,21 +10,29 @@
     "dev": "nodemon src/server.js",
     "migrate": "postgrator --config postgrator-config.js",
     "migrate:test": "env NODE_ENV=test npm run migrate",
-    "predeploy": "npm audit",
-    "deploy": "git push heroku main"
+    "migrate:production": "heroku run npm run migrate",
+    "predeploy": "npm audit && npm run migrate:production",
+    "deploy": "git push heroku main",
+    "seed:production": "cat ./seeds/seed.tables.sql | heroku pg:psql"
   },
   "keywords": [],
-  "author": "",
+  "engines": {
+    "node": "12.19.0"
+  },
+  "author": "Jenna Chestnut",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^4.2.0",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.12",
     "morgan": "^1.10.0",
-    "pg": "^8.5.1",
-    "xss": "^1.0.8"
+    "xss": "^1.0.8",
+    "pg": "^7.8.2",
+    "postgrator-cli": "^3.1.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -32,7 +40,6 @@
     "eslint-config-prettier": "^6.15.0",
     "mocha": "^8.2.1",
     "nodemon": "^2.0.6",
-    "postgrator-cli": "^3.2.0",
     "prettier": "2.2.1",
     "supertest": "^6.0.1"
   }
