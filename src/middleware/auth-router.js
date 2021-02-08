@@ -39,8 +39,9 @@ authRouter
         }
 
         const sub = user.user_name;
-        const payload = { user_id : user.id,  
-          name: match.full_name };
+        const payload = { 
+          user_id : user.id,  
+          name: user.full_name };
         res.send({
           authToken: AuthService.createJwt(sub, payload)
         });
