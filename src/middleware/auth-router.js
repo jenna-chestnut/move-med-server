@@ -41,7 +41,10 @@ authRouter
         const sub = user.user_name;
         const payload = { 
           user_id : user.id,  
-          name: user.full_name };
+          name: user.full_name,
+          is_admin: user.is_admin,
+          is_provider: user.is_provider 
+        };
         res.send({
           authToken: AuthService.createJwt(sub, payload)
         });
