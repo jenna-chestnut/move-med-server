@@ -53,7 +53,7 @@ authRouter
   })
   .put(requireAuth, (req, res) => {
     const { user } = req;
-    const sub = req.user.username;
+    const sub = user.user_name;
     const payload = {
       user_id: user.id,
       name: user.full_name,
