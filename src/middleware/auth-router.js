@@ -58,7 +58,7 @@ authRouter
       user_id: user.id,
       name: user.full_name,
       is_admin: user.is_admin,
-      is_provider: user.is_provider 
+      is_provider: user.is_provider,
     };
     res.send({
       authToken: AuthService.createJwt(sub, payload),
