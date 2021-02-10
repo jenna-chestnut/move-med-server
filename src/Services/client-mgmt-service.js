@@ -16,6 +16,7 @@ const ClientMgmtService = {
   getAllUserExercises(db, user_id) {
     return db
       .from('user_exercises')
+      .innerJoin('exercises', 'exercises.id', 'user_exercises.exercise_id')
       .where({ 'user_exercises.user_id' : user_id });
   },
   createUserExercise(db, data) {

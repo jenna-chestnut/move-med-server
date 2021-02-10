@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('../../src/config');
+const { JWT_SECRET, JWT_EXPIRY } = require('../../src/config');
 const contentFixtures = require('./dbcontent.fixtures');
 
 const {
@@ -78,6 +78,7 @@ function seedTables(db, users, exercises = [], user_exercises = [], comments = [
 function makeAuthHeader(user, secret = JWT_SECRET) {
   const token = jwt.sign({ user_id: user.id }, secret, {
     subject: user.user_name,
+    expiresIn: JWT_EXPIRY,
     algorithm: 'HS256',
   });
   return `Bearer ${token}`;

@@ -41,7 +41,7 @@ describe('/exercises endpoints', () => {
       });
     });
 
-    context('Given user is logged in & there are no goals', () => {
+    context('Given user is logged in & there are no exercises', () => {
       before('insert users', () => {
         return Fixtures.seedTables(
           db,
@@ -56,7 +56,7 @@ describe('/exercises endpoints', () => {
       });
     });
 
-    context('Given user is logged in & there are goals', () => {
+    context('Given user is logged in & there are exercises', () => {
       beforeEach("insert stuff", () => {
         return Fixtures.seedTables(
           db,
@@ -96,6 +96,7 @@ describe('/exercises endpoints', () => {
               expect(exc.user_id).to.eql(testUsers[1].id);
               expect(exc).to.have.property('frequency');
               expect(exc).to.have.property('duration');
+              expect(exc).to.have.property('exercise_name');
             });
           });
       });

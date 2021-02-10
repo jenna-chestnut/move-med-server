@@ -3,7 +3,7 @@ const knex = require("knex");
 const supertest = require("supertest");
 const app = require("../src/app");
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('../src/config');
+const { JWT_SECRET, JWT_EXPIRY } = require('../src/config');
 const Fixtures = require("./fixtures/action.fixtures");
 
 describe('/login and /register endpoints', () => {
@@ -86,10 +86,16 @@ describe('/login and /register endpoints', () => {
       };
   
       const expectedToken = jwt.sign(
-        { user_id: testUsers[0].id }, //payload
+        { 
+          user_id: testUsers[0].id,
+          name: testUsers[0].full_name,
+          is_admin: testUsers[0].is_admin,
+          is_provider: testUsers[0].is_provider 
+        }, //payload
         JWT_SECRET,
         {
           subject: testUsers[0].user_name,
+          expiresIn: JWT_EXPIRY,
           algorithm: 'HS256'
         }
       );
@@ -191,10 +197,16 @@ describe('/login and /register endpoints', () => {
       const newUser = Fixtures.makeNewUser();
   
       const expectedToken = jwt.sign(
-        { user_id: newUser.id }, //payload
+        { 
+          user_id: newUser.id,
+          name: newUser.full_name,
+          is_admin: newUser.is_admin,
+          is_provider: newUser.is_provider 
+        }, //payload
         JWT_SECRET,
         {
           subject: newUser.user_name,
+          expiresIn: JWT_EXPIRY,
           algorithm: 'HS256'
         }
       );
