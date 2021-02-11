@@ -45,7 +45,34 @@ describe('/client-mgmt endpoints', () => {
 
   afterEach('cleanup', () => Fixtures.cleanTables(db));
 
-  // FOR USER EXERCISE MANAGEMENT
+  // FOR USER EXERCISE MANAGEMENT BY ADMIN/PROVIDER
+
+  describe.only("GET client-mgmt/exercises/:id", () => {
+    const user_ex = testUserExercises[0];
+
+    it('returns 401 unauthorized when not logged in', () => {
+      return supertest(app)
+        .get(`/api/client-mgmt/exercises/${user_ex.id}`)
+        .expect(401);
+    });
+
+    it('returns 404 not found if exercise does not exist', () => {
+      return supertest(app)
+        .get(`/api/client-mgmt/exercises/0000`)
+        .set('Authorization', Fixtures.makeAuthHeader(testUsers[4]))
+        .expect(404);
+    });
+    
+    it('returns user exercise when provider/admin', () => {
+      return supertest(app)
+        .get(`/api/client-mgmt/exercises/${user_ex.id}`)
+        .set('Authorization', Fixtures.makeAuthHeader(testUsers[4]))
+        .expect(200)
+        .then(res => {
+          expect(res.body).to.have.property('frequency');
+        });
+    });
+  });
 
   describe("POST /client-mgmt/exercises/:user_id", () => {
     const newEx = Fixtures.makeNewUserExercise();

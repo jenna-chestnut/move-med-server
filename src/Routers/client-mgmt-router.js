@@ -38,7 +38,20 @@ clientMgmtRouter
 
 clientMgmtRouter
   .route('/exercises/:user_ex_id')
-  .patch(checkRestrictedAccess, async (req, res, next) => {
+  .get(async (req, res, next) => {
+    const { user_ex_id } = req.params;
+    console.log('making it here ', user_ex_id);
+    try {
+      const ex = await ClientMgmtService.getUserExercise(req.app.get('db'), user_ex_id, null, true);
+      if (!ex) return res.status(404).json({
+        error: 'Exercise not found'
+      });
+      else return res.status(200).json(ex);
+    }
+    catch(err) { next(err); }
+  })
+
+  .patch(async (req, res, next) => {
     const { user_ex_id } = req.params;
     const newData = req.body;
 
