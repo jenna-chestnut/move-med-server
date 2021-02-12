@@ -40,7 +40,6 @@ clientMgmtRouter
   .route('/exercises/:user_ex_id')
   .get(async (req, res, next) => {
     const { user_ex_id } = req.params;
-    console.log('making it here ', user_ex_id);
     try {
       const ex = await ClientMgmtService.getUserExercise(req.app.get('db'), user_ex_id, null, true);
       if (!ex) return res.status(404).json({

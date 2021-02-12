@@ -5,11 +5,15 @@ const ClientMgmtService = {
       ? 
       db
         .from('user_exercises')
-        .where({ id })
+        .innerJoin('exercises', 'exercises.id', 'user_exercises.exercise_id')
+        .select('user_exercises.*', 'exercises.exercise_name', 'exercises.videourl', 'exercises.imgurl')
+        .where({ 'user_exercises.id' : id })
         .first()
       :
       db
         .from('user_exercises')
+        .innerJoin('exercises', 'exercises.id', 'user_exercises.exercise_id')
+        .select('user_exercises.*', 'exercises.exercise_name', 'exercises.videourl', 'exercises.imgurl')
         .where({ exercise_id: id, user_id })
         .first();
   },
@@ -17,6 +21,7 @@ const ClientMgmtService = {
     return db
       .from('user_exercises')
       .innerJoin('exercises', 'exercises.id', 'user_exercises.exercise_id')
+      .select('user_exercises.*', 'exercises.exercise_name', 'exercises.videourl', 'exercises.imgurl')
       .where({ 'user_exercises.user_id' : user_id });
   },
   createUserExercise(db, data) {

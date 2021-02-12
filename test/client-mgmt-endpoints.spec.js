@@ -47,7 +47,7 @@ describe('/client-mgmt endpoints', () => {
 
   // FOR USER EXERCISE MANAGEMENT BY ADMIN/PROVIDER
 
-  describe.only("GET client-mgmt/exercises/:id", () => {
+  describe("GET client-mgmt/exercises/:id", () => {
     const user_ex = testUserExercises[0];
 
     it('returns 401 unauthorized when not logged in', () => {
@@ -70,6 +70,7 @@ describe('/client-mgmt endpoints', () => {
         .expect(200)
         .then(res => {
           expect(res.body).to.have.property('frequency');
+          expect(res.body).to.have.property('videourl');
         });
     });
   });

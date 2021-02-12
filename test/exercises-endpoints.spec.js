@@ -211,6 +211,7 @@ describe('/exercises endpoints', () => {
           .expect(200)
           .then(res => {
             expect(res.body).to.have.property('frequency');
+            expect(res.body).to.have.property('videourl');
           });
       });
     });
