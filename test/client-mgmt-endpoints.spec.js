@@ -252,12 +252,13 @@ describe('/client-mgmt endpoints', () => {
     
     it('returns 201 and edits user goal if user is admin/provider', () => {
       return supertest(app)
-        .patch(`/api/client-mgmt/goal/${testUsers[0].id}`)
+        .patch(`/api/client-mgmt/goal/${testUsers[1].id}`)
         .set('Authorization', Fixtures.makeAuthHeader(testUsers[4]))
         .send(newData)
         .expect(201)
         .then(res => {
           expect(res.body.goal_text).to.eql(newData.goal_text);
+          expect(res.body.user_id).to.eql(testUsers[1].id);
         });
     });
   });

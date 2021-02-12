@@ -60,11 +60,11 @@ const ClientMgmtService = {
       .returning('*')
       .then(([goal]) => goal);
   },
-  updateUserGoal(db, id, data) {
+  updateUserGoal(db, user_id, data) {
     return db
       .from('user_goal')
       .update(data)
-      .where({ id })
+      .where({ user_id })
       .returning('*')
       .then(([goal]) => goal);
   }
