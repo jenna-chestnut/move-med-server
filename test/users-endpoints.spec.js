@@ -121,7 +121,7 @@ describe('/users endpoints', () => {
     });
 
 
-    it('responds 201 and updates existing user', () => {
+    it.only('responds 201 and updates existing user', () => {
       const toUpdate = Fixtures.makeNewUser();
 
       return supertest(app)

@@ -65,7 +65,7 @@ adminRouter
         error: 'User not updated'
       });
 
-      else return res.status(201).json(updated);
+      else return res.status(201).send('Content updated!');
     }
     catch (error) { next(error); };
   })
