@@ -52,7 +52,12 @@ clientMgmtRouter
 
   .patch(async (req, res, next) => {
     const { user_ex_id } = req.params;
-    const newData = req.body;
+    const {add_note, frequency, duration} = req.body;
+    const newData = {};
+    if (add_note) newData['add_note'] = add_note;
+    if (frequency) newData['frequency'] = frequency;
+    if (duration) newData['duration'] = duration;
+
 
     try {
       const updated = await ClientMgmtService.updateUserExercise(req.app.get('db'), user_ex_id, newData);
