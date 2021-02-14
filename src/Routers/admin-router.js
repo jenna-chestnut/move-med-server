@@ -22,7 +22,13 @@ adminRouter
       const users = await UserService.getAllUsers(req.app.get('db'));
 
       if (!users) return res.status(404).json({error: 'Users not found'});
-      else return res.status(200).json(users);
+      else {
+        let usersToSend = users.map(el => {
+          const { password, ...rest } = el;
+          return rest;
+        });
+        return res.status(200).json(usersToSend);
+      }
     }
     catch(error) { next(error); };
   });
@@ -38,7 +44,10 @@ const checkForUser = async (req, res, next) => {
       error: 'user not found'
     });
 
-    else req.foundUser = user;
+    else {
+      const { password, ...rest } = user;
+      req.foundUser = rest;
+    }
     next();
   }
   catch(error) { next(error); };

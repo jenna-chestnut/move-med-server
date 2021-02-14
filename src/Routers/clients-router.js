@@ -16,8 +16,13 @@ clientsRouter
     try {
       const clients = await UserService.getAllClients(req.app.get('db'));
 
+      let clientsToSend = clients.map(el => {
+        const { password, ...rest } = el;
+        return rest;
+      });
+
       if (!clients) return res.status(404).json({error: 'clients not found'});
-      else return res.status(200).json(clients);
+      else return res.status(200).json(clientsToSend);
     }
     catch(error) { next(error); };
   });
@@ -40,7 +45,10 @@ clientsRouter
         error: 'client exercises not found'
       });
 
-      else return res.status(200).json({ client, clientExercises, clientGoal });
+      else {
+        const { password, ...rest } = client;
+        return res.status(200).json({ client : rest, clientExercises, clientGoal });
+      }
     }
     catch(error) { next(error); };
   });

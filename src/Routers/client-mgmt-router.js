@@ -57,7 +57,7 @@ clientMgmtRouter
     if (add_note) newData['add_note'] = add_note;
     if (frequency) newData['frequency'] = frequency;
     if (duration) newData['duration'] = duration;
-
+ 
 
     try {
       const updated = await ClientMgmtService.updateUserExercise(req.app.get('db'), user_ex_id, newData);
