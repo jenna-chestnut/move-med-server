@@ -8,10 +8,8 @@ const CommentsService = {
   getAllComments(db, user_exercise_id) {
     return db
       .from('comments')
-      .leftOuterJoin('user_exercises', 'comments.user_exercise_id', 'user_exercises.id')
-      .leftOuterJoin('exercises', 'exercises.id', 'user_exercises.exercise_id')
       .rightOuterJoin('users', 'users.id', 'comments.user_id')
-      .select('comments.*', 'users.full_name', 'exercises.exercise_name')
+      .select('comments.*', 'users.full_name')
       .where({ user_exercise_id });
   },
   createComment(db, newComment) {
