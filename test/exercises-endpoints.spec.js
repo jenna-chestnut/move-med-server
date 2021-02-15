@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+const { expect } = require("chai");
 const knex = require("knex");
 const supertest = require("supertest");
 const app = require("../src/app");
@@ -144,7 +145,6 @@ describe('/exercises endpoints', () => {
             .send(badExercise)
             .expect(400);
         });
-
       });
 
       it('Creates new exercise when body is correct', () => {
@@ -158,6 +158,14 @@ describe('/exercises endpoints', () => {
             expect(res.body.imgurl).to.eql(newExercise.imgurl);
             expect(res.body.videourl).to.eql(newExercise.videourl);
             expect(res.body).to.have.property('id');
+          }).then(() => {
+            return supertest(app)
+              .get(`/api/exercises`)
+              .set('Authorization', Fixtures.makeAuthHeader(testUsers[0]))
+              .expect(200)
+              .then(res => {
+                expect(res.body[res.body.length - 1].exercise_name).to.eql(newExercise.exercise_name);
+              });
           });
       });
     });

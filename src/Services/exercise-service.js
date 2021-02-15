@@ -3,8 +3,8 @@ const ExerciseService = {
   getAllExercises(db) {
     return db
       .from('exercise_body_parts')
-      .leftOuterJoin('exercises', 'exercises.id', 'exercise_body_parts.exercise_id')
-      .leftOuterJoin('body_categories', 'body_categories.id', 'exercise_body_parts.body_category_id')
+      .fullOuterJoin('exercises', 'exercises.id', 'exercise_body_parts.exercise_id')
+      .fullOuterJoin('body_categories', 'body_categories.id', 'exercise_body_parts.body_category_id')
       .select('exercises.*', 'body_categories.body_part');
   },
   getExercise(db, id) {
