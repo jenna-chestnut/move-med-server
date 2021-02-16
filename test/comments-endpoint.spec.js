@@ -10,7 +10,7 @@ describe("/comments endpoints", () => {
   const {
     testUsers,
     testExercises,
-    testUserExercises,
+    testUserExercises, 
     testComments,
     testCats,
     testExerciseCats,
@@ -118,7 +118,7 @@ describe("/comments endpoints", () => {
         .then(res => {
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('id');
-          expect(res.body.user_id).to.eql(userEx.user_id);
+          expect(res.body.user_id).to.eql(testUsers[4].id);
           expect(res.body.user_exercise_id).to.eql(userEx.id);
         });
     });

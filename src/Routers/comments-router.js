@@ -43,8 +43,8 @@ commentsRouter
   })
   .post(checkUserEx, async (req, res, next) => {
     const { id } = req.userEx;
-    const { user_id, comment_text } = req.body;
-    const newComment = { user_exercise_id:id, user_id, comment_text };
+    const { comment_text } = req.body;
+    const newComment = { user_exercise_id:id, user_id:req.user.id, comment_text };
 
     for (const [key, value] of Object.entries(newComment)) {
       if (value == null ) {
