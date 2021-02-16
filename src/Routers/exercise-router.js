@@ -3,6 +3,7 @@ const ExerciseService = require("../Services/exercise-service");
 const checkRestrictedAccess = require("../middleware/restricted-access");
 const { requireAuth } = require("../middleware/jwt-auth");
 const ClientMgmtService = require("../Services/client-mgmt-service");
+const xss = require("xss");
 
 const exercisesRouter = express.Router();
 
@@ -18,8 +19,15 @@ exercisesRouter
       let exc = [];
 
       if (is_admin || is_provider) {
-        const exercises = await ExerciseService
+        let exercises = await ExerciseService
           .getAllExercises(req.app.get('db'));
+
+        exercises = exercises.map(el => {
+          return {
+            ...el, 
+            imgurl: xss(el.imgurl), 
+            videourl: xss(el.videourl)};
+        });
         
         // merge our categories into an array for each exercise
         exercises.forEach((e, idx) => {
@@ -42,6 +50,13 @@ exercisesRouter
         exc = await ClientMgmtService
           .getAllUserExercises(req.app.get('db'), id);
         const goal = await ClientMgmtService.getUserGoal(req.app.get('db'), id);
+
+        exc = exc.map(el => {
+          return {
+            ...el, 
+            imgurl: xss(el.imgurl), 
+            videourl: xss(el.videourl)};
+        });
 
         exc = {exercises: exc, goal};
       }
@@ -96,7 +111,7 @@ exercisesRouter
       if (!exercise) return res.status(404).json({
         error: 'Exercise not found'
       });
-      else return res.status(200).json(exercise);
+      else return res.status(200).json({...exercise, imgurl: xss(exercise.imgurl), videourl: xss(exercise.videourl)});
     }
     catch (error) { next(error); }
   })

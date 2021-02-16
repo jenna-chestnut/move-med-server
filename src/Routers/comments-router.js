@@ -1,4 +1,5 @@
 const express = require("express");
+const xss = require("xss");
 const { requireAuth } = require("../middleware/jwt-auth");
 const ClientMgmtService = require("../Services/client-mgmt-service");
 const CommentsService = require("../Services/comments-service");
@@ -36,8 +37,11 @@ commentsRouter
 
     try {
       const comments = await CommentsService.getAllComments(req.app.get('db'), id);
+      const cleanComments = await comments.map(el => {
+        return {...el, comment_text: xss(el.comment_text)};
+      });
 
-      return res.status(200).json(comments);
+      return res.status(200).json(cleanComments);
     }
     catch (error) { next(error); }
   })

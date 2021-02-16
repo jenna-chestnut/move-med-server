@@ -2,6 +2,7 @@ const express = require("express");
 const checkRestrictedAccess = require("../middleware/restricted-access");
 const { requireAuth } = require("../middleware/jwt-auth");
 const ClientMgmtService = require("../Services/client-mgmt-service");
+const xss = require("xss");
 
 const clientMgmtRouter = express.Router();
 
@@ -45,7 +46,7 @@ clientMgmtRouter
       if (!ex) return res.status(404).json({
         error: 'Exercise not found'
       });
-      else return res.status(200).json(ex);
+      else return res.status(200).json({...ex, imgurl: xss(ex.imgurl), videourl: xss(ex.videourl)});
     }
     catch(err) { next(err); }
   })
