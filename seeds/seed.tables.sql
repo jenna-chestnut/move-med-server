@@ -12,7 +12,7 @@ TRUNCATE
 
 INSERT INTO exercises (exercise_name, imgURL, videoURL)
 VALUES
-  ('Back Extension', 'https://tinyurl.com/y4qwu5kf', '3UTHsuDl4vw'),
+  ('Back Extension', 'https://gdurl.com/M3wr', '3UTHsuDl4vw'),
   ('Cervical Spine Retraction/Extension', 'https://tinyurl.com/y249qrbl', 'ZY3s2Y1dTck'),
   ('Hip Extension', 'https://tinyurl.com/yymh2drz', '5ZdkDtwmgWs'),
   ('Thoracic Extension Sitting', 'https://tinyurl.com/y4fwrt4l', 'U-b_36Uc-9E'),
